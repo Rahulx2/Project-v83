@@ -1,4 +1,4 @@
-###This project has been abandoned.
+###Project in progress.
 
 [![Build Status](https://travis-ci.org/Maxcloud/Project-v83.svg?branch=master)](https://travis-ci.org/Rahulx2/Project-v83) 
 # ![](http://i66.tinypic.com/108bujq.png) AuroStory v83
