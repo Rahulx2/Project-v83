@@ -17,7 +17,7 @@ An open-source emulator for MapleStory.
  $ mvn clean install
  ```
  * Extract the WZ files using WZDumper.
- * Double-click launch.bat to launch Mushy.
+ * Double-click launch.bat to launch MapleStory.
 
 ## External Resources
  * [WZ Dumper](http://www.mediafire.com/?iouionvanfj6z06)
