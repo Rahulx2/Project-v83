@@ -1,3 +1,24 @@
-<a href="https://travis-ci.org/garu/Clone"><img alt="Build Status" src="https://travis-ci.org/garu/Clone.png?branch=master" /></a>
-<a href="https://coveralls.io/r/garu/Clone?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/garu/Clone/badge.png?branch=master" /></a>
-<a href="https://metacpan.org/pod/Clone"><img alt="Version" src="https://badge.fury.io/pl/Clone.svg" /></a>
+###This project has been abandoned.
+
+[![Build Status](https://travis-ci.org/Maxcloud/Project-v83.svg?branch=master)](https://travis-ci.org/Rahulx2/Project-v83) 
+# ![](http://i66.tinypic.com/108bujq.png) AuroStory v83
+[Home](https://github.com/Rahulx2/Project-v83) | [Issue Tracking](https://github.com/Rahulx2/Project-v83/issues) | [Support](http://forum.ragezone.com/f566/) | [Redes Sociales](https://www.facebook.com/FatalStoryv83/)
+
+An open-source emulator for MapleStory.
+
+## Getting Started
+ * Clone this repository.
+ ``` 
+ $ git clone https://github.com/Rahulx2/Project-v83.git
+ ```
+ 
+ * Open the maven project using **world.ini** and compile.
+ ```
+ $ mvn clean install
+ ```
+ * Extract the WZ files using WZDumper.
+ * Double-click launch.bat to launch Mushy.
+
+## External Resources
+ * [WZ Dumper](http://www.mediafire.com/?iouionvanfj6z06)
+Credit for the WZ Dumper for: iAuraz
