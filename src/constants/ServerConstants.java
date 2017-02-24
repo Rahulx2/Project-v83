@@ -16,6 +16,8 @@ public class ServerConstants {
     public static final boolean PERFECT_PITCH = false;
     // IP Configuration
     public static String HOST;
+    //AutoRegister
+    //public static boolean AutoRegister = false;
     //Database Configuration
     public static String DB_URL = "";
     public static String DB_USER = "";
