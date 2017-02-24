@@ -59,6 +59,7 @@ import server.maps.MapleMapFactory;
 import tools.MaplePacketCreator;
 import client.MapleCharacter;
 import constants.ServerConstants;
+import net.server.Server;
 
 public final class Channel {
 
@@ -153,6 +154,7 @@ public final class Channel {
     }
 
     public void addPlayer(MapleCharacter chr) {
+        Server.getConsole().loadPlayers();
         players.addPlayer(chr);
         chr.announce(MaplePacketCreator.serverMessage(serverMessage));
     }
@@ -162,6 +164,7 @@ public final class Channel {
     }
 
     public void removePlayer(MapleCharacter chr) {
+        Server.getConsole().loadPlayers();
         players.removePlayer(chr.getId());
     }
 

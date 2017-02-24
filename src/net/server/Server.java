@@ -62,6 +62,7 @@ import tools.Pair;
 import client.MapleCharacter;
 import client.SkillFactory;
 import constants.ServerConstants;
+import net.server.console.ConsoleGUI;
 import server.quest.MapleQuest;
 
 public class Server implements Runnable {
@@ -77,6 +78,7 @@ public class Server implements Runnable {
     private Map<Integer, MapleAlliance> alliances = new LinkedHashMap<>();
     private boolean online = false;
     public static long uptime = System.currentTimeMillis();
+    private static ConsoleGUI console = null;  
     
     public static Server getInstance() {
         if (instance == null) {
@@ -109,6 +111,27 @@ public class Server implements Runnable {
     public List<Channel> getChannelsFromWorld(int world) {
         return worlds.get(world).getChannels();
     }
+    
+    public void restart() {
+        for (World w : getWorlds()) {
+            w.shutdown();
+        }
+        TimerManager.getInstance().purge();
+        TimerManager.getInstance().stop();
+        worlds.clear();
+        worlds = null;
+        channels.clear();
+        channels = null;
+        worldRecommendedList.clear();
+        worldRecommendedList = null;
+        acceptor.unbind();
+        acceptor = null;
+        instance = null;
+        System.out.println("");
+        System.out.println("");
+        System.out.println("rnRestarting the server....rn");
+        getInstance().run();
+    }  
 
     public List<Channel> getAllChannels() {
         List<Channel> channelz = new ArrayList<>();
@@ -229,9 +252,17 @@ public class Server implements Runnable {
     }
 
     public static void main(String args[]) {
-        Server.getInstance().run();
-    }
+        //Server.getInstance().run();
+        Server.getConsole().main(null);
+    }  
 
+     public static ConsoleGUI getConsole() {
+        if (console == null) {
+            console = new ConsoleGUI();
+        }
+        return console;
+    }  
+    
     public Properties getSubnetInfo() {
         return subnetInfo;
     }
