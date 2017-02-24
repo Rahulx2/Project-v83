@@ -266,6 +266,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     private PartyQuest partyQuest = null;
     private boolean loggedIn = false;
     private MapleDragon dragon = null;
+    
+    //MapleClans
+    public MapleClans mapleclan = MapleClans.None;  
 
     private MapleCharacter() {
         setStance(0);
@@ -302,6 +305,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         ret.luk = 4;
         ret.map = null;
         ret.job = MapleJob.BEGINNER;
+        ret.mapleclan = MapleClans.None;
         ret.level = 1;
         ret.accountid = c.getAccID();
         ret.buddylist = new BuddyList(20);
@@ -401,6 +405,18 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         updateSingleStat(MapleStat.HP, getHp());
         updateSingleStat(MapleStat.MP, getMp());
     }
+    
+    public MapleClans getMapleClan(){
+        return mapleclan;
+    }  
+    
+    public void changeClans(MapleClans mc) {
+        mapleclan = mc;
+    }
+
+    public void setMapleClan(int mc) {
+        changeClans(MapleClans.getById(mc));
+    }  
 
     public void addPet(MaplePet pet) {
         for (int i = 0; i < 3; i++) {
@@ -1802,9 +1818,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         return new ArrayList<>(doors);
     }
 
-    public int getDropRate() {
-        return dropRate;
-    }
+    public int getDropRate(){
+        return getMapleClanRates()[2];
+    }  
 
     public int getEnergyBar() {
         return energybar;
@@ -1826,8 +1842,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         return gachaexp.get();
     }
 
-    public int getExpRate() {
-        return expRate;
+    public int getExpRate(){
+        return getMapleClanRates()[0];
     }
 
     public int getFace() {
@@ -2063,8 +2079,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         return merchantmeso;
     }
 
-    public int getMesoRate() {
-        return mesoRate;
+    public int getMesoRate(){
+        return getMapleClanRates()[1];
     }
 
     public int getMesosTraded() {
@@ -2828,6 +2844,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
                 throw new RuntimeException("Loading char failed (not found)");
             }
             ret.name = rs.getString("name");
+            ret.mapleclan = MapleClans.getById(rs.getInt("mapleclan"));
             ret.level = rs.getInt("level");
             ret.fame = rs.getInt("fame");
             ret.str = rs.getInt("str");
@@ -3808,7 +3825,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             con.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
             con.setAutoCommit(false);
             PreparedStatement ps;
-            ps = con.prepareStatement("UPDATE characters SET level = ?, fame = ?, str = ?, dex = ?, luk = ?, `int` = ?, exp = ?, gachaexp = ?, hp = ?, mp = ?, maxhp = ?, maxmp = ?, sp = ?, ap = ?, gm = ?, skincolor = ?, gender = ?, job = ?, hair = ?, face = ?, map = ?, meso = ?, hpMpUsed = ?, spawnpoint = ?, party = ?, buddyCapacity = ?, messengerid = ?, messengerposition = ?, mountlevel = ?, mountexp = ?, mounttiredness= ?, equipslots = ?, useslots = ?, setupslots = ?, etcslots = ?,  monsterbookcover = ?, vanquisherStage = ?, dojoPoints = ?, lastDojoStage = ?, finishedDojoTutorial = ?, vanquisherKills = ?, matchcardwins = ?, matchcardlosses = ?, matchcardties = ?, omokwins = ?, omoklosses = ?, omokties = ?, dataString = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+            ps = con.prepareStatement("UPDATE characters SET level = ?, fame = ?, str = ?, dex = ?, luk = ?, `int` = ?, exp = ?, gachaexp = ?, hp = ?, mp = ?, maxhp = ?, maxmp = ?, sp = ?, ap = ?, gm = ?, skincolor = ?, gender = ?, job = ?, hair = ?, face = ?, map = ?, meso = ?, hpMpUsed = ?, spawnpoint = ?, party = ?, buddyCapacity = ?, messengerid = ?, messengerposition = ?, mountlevel = ?, mountexp = ?, mounttiredness= ?, equipslots = ?, useslots = ?, setupslots = ?, etcslots = ?,  monsterbookcover = ?, vanquisherStage = ?, dojoPoints = ?, lastDojoStage = ?, finishedDojoTutorial = ?, vanquisherKills = ?, matchcardwins = ?, matchcardlosses = ?, matchcardties = ?, omokwins = ?, omoklosses = ?, omokties = ?, dataString = ?, mapleclan = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
             if (gmLevel < 1 && level > 199) {
                 ps.setInt(1, isCygnus() ? 120 : 200);
             } else {
@@ -3901,7 +3918,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
             ps.setInt(46, omoklosses);
             ps.setInt(47, omokties);
             ps.setString(48, dataString);
-            ps.setInt(49, id);
+            ps.setInt(49, mapleclan.getId());
+            ps.setInt(50, id);
 
             int updateRows = ps.executeUpdate();
             if (updateRows < 1) {
@@ -4438,6 +4456,50 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         this.maxmp = mp;
         recalcLocalStats();
     }
+    
+    public int[] getMapleClanRates(){
+            int exprate = ServerConstants.EXP_RATE;
+            int mesorate = ServerConstants.EXP_RATE;
+            int droprate = ServerConstants.DROP_RATE;
+    switch(getMapleClan().getId()){
+        case 100: // Eagle
+            exprate = ServerConstants.EXP_RATE + 4;
+            mesorate = ServerConstants.MESO_RATE + 2;
+            droprate = ServerConstants.DROP_RATE + 1;
+    break;
+        case 200: // Serpent
+            exprate = ServerConstants.EXP_RATE + 4;
+            mesorate = ServerConstants.MESO_RATE + 1;
+            droprate = ServerConstants.DROP_RATE + 1;
+    break;
+        case 300: // Lion
+            exprate = ServerConstants.EXP_RATE + 3;
+            mesorate = ServerConstants.MESO_RATE + 3;
+            droprate = ServerConstants.DROP_RATE + 2;
+    break;
+        case 400: // Salamander
+            exprate = ServerConstants.EXP_RATE + 3;
+            mesorate = ServerConstants.MESO_RATE + 2;
+            droprate = ServerConstants.DROP_RATE + 3;
+    break;
+        case 500: // Roadrunner
+            exprate = ServerConstants.EXP_RATE + 3;
+            mesorate = ServerConstants.MESO_RATE + 4;
+            droprate = ServerConstants.DROP_RATE + 3;
+    break;
+        case 600: // Shark
+            exprate = ServerConstants.EXP_RATE + 8;
+            mesorate = ServerConstants.MESO_RATE + 3;
+            droprate = ServerConstants.DROP_RATE +2;
+    break;
+        default:
+            exprate = ServerConstants.EXP_RATE + 1;
+            mesorate = ServerConstants.MESO_RATE + 2;
+            droprate = ServerConstants.DROP_RATE;
+    break;
+    } 
+        return new int[]{exprate, mesorate, droprate};
+    }  
 
     public void setMessenger(MapleMessenger messenger) {
         this.messenger = messenger;

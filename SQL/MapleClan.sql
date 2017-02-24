@@ -1,0 +1,1 @@
+ALTER TABLE `MapleStory`.`characters` ADD COLUMN `mapleclan` INTEGER NOT NULL DEFAULT 0;  

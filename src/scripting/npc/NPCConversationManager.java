@@ -49,6 +49,7 @@ import tools.DatabaseConnection;
 import tools.FilePrinter;
 import tools.MaplePacketCreator;
 import client.MapleCharacter;
+import client.MapleClans;
 import client.MapleClient;
 import client.MapleJob;
 import client.MapleSkinColor;
@@ -516,4 +517,24 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		dispose();
 		return true;
 	}
+        
+        public int getMapleClan(){
+            return getPlayer().getMapleClan().getId();
+        }
+
+        public String getMapleClanName(){
+            return getPlayer().getMapleClan().getName();
+        }
+
+        public String getMapleClanSB(){
+            return getPlayer().getMapleClan().getSkillName();
+        }
+
+        public void changeClans(MapleClans mc) {
+            getPlayer().mapleclan = mc;
+        }
+
+        public void setMapleClan(int mc) {
+            changeClans(MapleClans.getById(mc));
+        }  
 }

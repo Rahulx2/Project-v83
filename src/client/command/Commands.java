@@ -513,6 +513,9 @@ public class Commands {
 			player.dropMessage(5, "Your message '" + message + "' was sent to GMs.");
 			player.dropMessage(5, tips[Randomizer.nextInt(tips.length)]);
 			break;
+                case "checkclan":
+                        player.dropMessage("You are a member of the "+ player.getMapleClan().getName() +" Clan. Your Rates are: "+ player.getExpRate() +" / "+ player.getMesoRate() +" / "+ player.getDropRate() +". Your Clan Skill is "+ player.getMapleClan().getSkillName() +".");
+                        break;
 		case "bug":
 			if (sub.length < 2) {
 				player.dropMessage(5, "Message too short and not sent. Please do @bug <bug>");
@@ -652,7 +655,11 @@ public class Commands {
 			for (int i : array) {
 				SkillFactory.getSkill(i).getEffect(SkillFactory.getSkill(i).getMaxLevel()).applyTo(player);
 			}
-		} else if (sub[0].equals("spawn")) {
+		} 
+                 else if (sub[0].equalsIgnoreCase("setclan")){
+                            player.setMapleClan(Integer.parseInt(sub[1]));
+                    player.dropMessage("You are now a part of the "+ player.getMapleClan().getName() +" Clan.");
+                    }  else if (sub[0].equals("spawn")) {
 			MapleMonster monster = MapleLifeFactory.getMonster(Integer.parseInt(sub[1]));
 			if (monster == null) {
 				return true;
