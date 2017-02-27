@@ -5350,4 +5350,61 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         }
         return sp;
     }
+    
+    public int getBossLog(String bossid) {
+        Connection con1 = DatabaseConnection.getConnection();
+        try {
+            int ret_count = 0;
+            PreparedStatement ps;
+            ps = con1.prepareStatement("select count(*) from bosslog where characterid = ? and bossid = ? and lastattempt >= subtime(current_timestamp, '1 0:0:0.0')");
+            ps.setInt(1, id);
+            ps.setString(2, bossid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) 
+                ret_count = rs.getInt(1);
+            else
+                ret_count = -1;
+            rs.close();
+            ps.close();
+            return ret_count;
+        } catch (Exception Ex) {
+            return -1;
+        }
+    }
+
+    public int getGiftLog(String bossid) {
+        Connection con1 = DatabaseConnection.getConnection();
+        try {
+            int ret_count = 0;
+            PreparedStatement ps;
+            ps = con1.prepareStatement("select count(*) from bosslog where accountid = ? and bossid = ? and lastattempt >= subtime(current_timestamp, '1 0:0:0.0')");
+            ps.setInt(1, accountid);
+            ps.setString(2, bossid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) 
+                ret_count = rs.getInt(1);
+            else
+                ret_count = -1;
+            rs.close();
+            ps.close();
+            return ret_count;
+        } catch (Exception Ex) {
+            return -1;
+        }
+    }
+
+    //setBossLog module
+    public void setBossLog(String bossid) {
+        Connection con1 = DatabaseConnection.getConnection();
+        try {
+            PreparedStatement ps;
+            ps = con1.prepareStatement("insert into bosslog (accountid, characterid, bossid) values (?,?,?)");
+            ps.setInt(1, accountid);
+            ps.setInt(2, id);
+            ps.setString(3, bossid);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception Ex) {
+        }
+    }
 }

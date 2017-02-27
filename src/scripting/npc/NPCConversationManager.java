@@ -537,4 +537,17 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         public void setMapleClan(int mc) {
             changeClans(MapleClans.getById(mc));
         }  
+        
+        public int getBossLog(String bossid) {
+            return getPlayer().getBossLog(bossid);
+        }
+
+        public int getGiftLog(String bossid) {
+            return getPlayer().getGiftLog(bossid);
+        }
+
+        //Creadores ABBEL, AIDOL Y DAVID
+        public void setBossLog(String bossid) {
+           getPlayer().setBossLog(bossid);
+        }
 }
