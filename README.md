@@ -22,3 +22,10 @@ An open-source emulator for MapleStory.
 ## External Resources
  * [WZ Dumper](http://www.mediafire.com/?iouionvanfj6z06)
 Credit for the WZ Dumper for: iAuraz
+
+
+## Cosas Realizadas
+* MapleClans Agregado.
+* Consola Agregado.
+* Guild Home System Agregado.
+* FreeGift Agregado.
