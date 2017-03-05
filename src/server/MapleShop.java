@@ -62,7 +62,7 @@ public class MapleShop {
         }
     }
 
-    private MapleShop(int id, int npcId) {
+    MapleShop(int id, int npcId) {
         this.id = id;
         this.npcId = npcId;
         items = new ArrayList<>();
