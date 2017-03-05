@@ -23,6 +23,7 @@ package net.server.channel.handlers;
 
 import client.MapleCharacter;
 import client.MapleClient;
+import constants.ServerConstants;
 import net.AbstractMaplePacketHandler;
 import net.server.Server;
 import tools.MaplePacketCreator;
@@ -36,6 +37,10 @@ public class EnterCashShopHandler extends AbstractMaplePacketHandler {
     @Override
 	public void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
         try {
+            if (ServerConstants.CASHSHOPSTATUS == false) {
+                c.getSession().write(MaplePacketCreator.serverNotice(1, "The cash shop is unavaiable. Please try again later."));
+            return;
+            }
         	MapleCharacter mc = c.getPlayer();
 
         	if (mc.getCashShop().isOpened()) return;
