@@ -128,6 +128,12 @@ public final class Channel {
             System.err.println("Error while shutting down Channel " + channel + " on World " + world + "\r\n" + e);
         }
     }
+    
+    public void saveAll() {
+        for (MapleCharacter chr : players.getAllCharacters()) {
+            chr.saveToDB();
+        }
+    }  
 
     public void closeAllMerchants() {
         WriteLock wlock = merchant_lock.writeLock();
