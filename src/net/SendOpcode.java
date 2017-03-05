@@ -324,6 +324,7 @@ public enum SendOpcode {
     
     CHARGE_PARAM_RESULT(0x143),
     QUERY_CASH_RESULT(0x144),
+    EARN_TITLE_MESSAGE(0x7A),
     CASHSHOP_OPERATION(0x145),
     
     KEYMAP(0x14F),

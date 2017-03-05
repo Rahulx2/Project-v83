@@ -6792,11 +6792,11 @@ public class MaplePacketCreator {
 			   }
 
 			   public static byte[] earnTitleMessage(String msg) {
-				   final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-				   mplew.writeShort(SendOpcode.SCRIPT_PROGRESS_MESSAGE.getValue());
-				   mplew.writeMapleAsciiString(msg);
-				   return mplew.getPacket();
-			   }
+                                    final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
+                                    mplew.writeShort(SendOpcode.EARN_TITLE_MESSAGE.getValue());
+                                    mplew.writeMapleAsciiString(msg);
+                                    return mplew.getPacket();
+                            }
 
 			   public static byte[] startCPQ(MapleCharacter chr, MonsterCarnivalParty enemy) {
 				   final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter(25);
