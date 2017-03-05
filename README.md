@@ -29,3 +29,11 @@ Credit for the WZ Dumper for: iAuraz
 * Consola Agregado.
 * Guild Home System Agregado.
 * FreeGift Agregado.
+* Combo Aran Arreglado.
+* AutoJob Agregado.
+* AutoSave Agregado.
+* Pandara Box Agregado.
+* GM Custom Equipment Creator Agregado.
+* Titulo mensaje Agregado.
+* Enable/Disable Cash Shop Agregado.
+* BalrogPQ Agregado.
