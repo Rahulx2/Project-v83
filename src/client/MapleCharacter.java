@@ -144,6 +144,7 @@ import constants.skills.Spearman;
 import constants.skills.SuperGM;
 import constants.skills.Swordsman;
 import constants.skills.ThunderBreaker;
+import scripting.npc.NPCScriptManager;
 
 public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 
@@ -2610,6 +2611,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
     }
 
     public void levelUp(boolean takeexp) {
+        autoJob();
         Skill improvingMaxHP = null;
         Skill improvingMaxMP = null;
         int improvingMaxHPLevel = 0;
@@ -2726,6 +2728,47 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
         }
         levelUpMessages();
         guildUpdate();
+    }
+    
+    public void autoJob() {
+     int job_ = client.getPlayer().getJob().getId();
+     if (!isAran() && level == 9 || !isAran() && !isCygnus() && level == 29) {
+      NPCScriptManager.getInstance().start(getClient(), 9201020, null, null);
+     } else if (isAran() && level == 9) {
+       client.getPlayer().changeJob(MapleJob.getById(2100));
+     } else if (isAran() && level == 29) {
+       client.getPlayer().changeJob(MapleJob.getById(2110));
+     } else if (isCygnus() && level == 29) {
+       client.getPlayer().changeJob(MapleJob.getById(job_ + 10));
+     } else if (isCygnus() && level == 69) {
+       client.getPlayer().changeJob(MapleJob.getById(job_ + 1));
+     } else if (isAran() && level == 69) {
+       client.getPlayer().changeJob(MapleJob.getById(2111));
+     } else if (isAran() && level == 119) {
+       client.getPlayer().changeJob(MapleJob.getById(2112));
+     }
+     if (!isAran() && !isCygnus() && level == 69) {
+      if (is2ndJob()) {
+       client.getPlayer().changeJob(MapleJob.getById(job_ + 1));
+      } else {
+       NPCScriptManager.getInstance().start(getClient(), 9201020, null, null);
+      }
+     } else if (!isCygnus() && !isAran() && level == 119) {
+      if (is3rdJob()) {
+       client.getPlayer().changeJob(MapleJob.getById(job_ + 1));
+      } else if (is2ndJob()){
+       client.getPlayer().changeJob(MapleJob.getById(job_ + 1));
+      } else {
+       NPCScriptManager.getInstance().start(getClient(), 9201020, null, null);
+      }
+     }
+    }
+        public boolean is2ndJob() {
+            return getJob().getId()%10 == 0 && getJob().getId()%100 != 0;
+    }
+
+    public boolean is3rdJob() {
+        return getJob().getId()%10 == 1;
     }
 
     public void gainAp(int amount) {
